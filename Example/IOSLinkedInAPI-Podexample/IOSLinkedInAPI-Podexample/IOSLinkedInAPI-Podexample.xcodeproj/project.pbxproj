@@ -36,6 +36,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		058C699E196CD67B004ECB02 /* LIALinkedInClientExampleCredentials.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LIALinkedInClientExampleCredentials.h; sourceTree = "<group>"; };
 		33AE6578185FA2E400981915 /* IOSLinkedInAPI-Podexample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "IOSLinkedInAPI-Podexample.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		33AE657B185FA2E400981915 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		33AE657D185FA2E400981915 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -130,6 +131,7 @@
 				33AE6594185FA2E400981915 /* LIAViewController.m */,
 				33AE6596185FA2E400981915 /* Images.xcassets */,
 				33AE6582185FA2E400981915 /* Supporting Files */,
+				058C699E196CD67B004ECB02 /* LIALinkedInClientExampleCredentials.h */,
 			);
 			path = "IOSLinkedInAPI-Podexample";
 			sourceTree = "<group>";
@@ -214,7 +216,7 @@
 				ORGANIZATIONNAME = "Eyben Consult ApS";
 				TargetAttributes = {
 					33AE659B185FA2E400981915 = {
-						TestTargetID = 33AE6577185FA2E400981915 /* IOSLinkedInAPI-Podexample */;
+						TestTargetID = 33AE6577185FA2E400981915;
 					};
 				};
 			};
@@ -229,8 +231,6 @@
 			mainGroup = 33AE656F185FA2E400981915;
 			productRefGroup = 33AE6579185FA2E400981915 /* Products */;
 			projectDirPath = "";
-			projectReferences = (
-			);
 			projectRoot = "";
 			targets = (
 				33AE6577185FA2E400981915 /* IOSLinkedInAPI-Podexample */,
@@ -522,6 +522,7 @@
 				33AE65AF185FA2E500981915 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		33AE65B0185FA2E500981915 /* Build configuration list for PBXNativeTarget "IOSLinkedInAPI-PodexampleTests" */ = {
 			isa = XCConfigurationList;
@@ -530,6 +531,7 @@
 				33AE65B2185FA2E500981915 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
