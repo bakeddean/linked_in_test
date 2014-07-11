@@ -22,8 +22,10 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *numFollowersLabel;
 @property (weak, nonatomic) IBOutlet UIButton *followButton;
+@property (weak, nonatomic) IBOutlet UIImageView *squareLogoImageView;
 
 @property (weak, nonatomic) IBOutlet UITextView *textView;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *descriptionTextViewHeightConstraint;
 
 @end
 
@@ -36,8 +38,8 @@
   _client = [self client];
   
   // Style follow button
-  self.followButton.layer.borderWidth = 1.0f;
-  self.followButton.layer.borderColor = COLOR_RGBA(233,172,26,1).CGColor;
+  //self.followButton.layer.borderWidth = 1.0f;
+  //self.followButton.layer.borderColor = COLOR_RGBA(233,172,26,1).CGColor;
   self.followButton.layer.cornerRadius = 3.0f;
   
   [self getCompanyInfoWithToken:[self accessToken]];
@@ -61,14 +63,10 @@
     }];
 }
 
-// Get company info
-- (IBAction)companyTapped:(id)sender {
-    [self getCompanyInfoWithToken:[self accessToken]];
-}
-
 // Get job postings
 - (IBAction)jobsTapped:(id)sender {
-    [self getCompanyJobPostings:[self accessToken]];
+    //[self getCompanyJobPostings:[self accessToken]];
+    [self getConnectionsWithToken:[self accessToken]];
 }
 
 #pragma mark - LinkedIn requests
@@ -82,18 +80,12 @@
 }
 
 - (void)getCompanyInfoWithToken:(NSString *)accessToken {
-    [self.client GET:[NSString stringWithFormat:@"https://api.linkedin.com/v1/companies/universal-name=new-zealand-defence-force:(id,name,description,logo-url,num-followers)?oauth2_access_token=%@&format=json", accessToken] parameters:nil success:^(AFHTTPRequestOperation *operation, NSDictionary *result) {
+    [self.client GET:[NSString stringWithFormat:@"https://api.linkedin.com/v1/companies/universal-name=new-zealand-defence-force:(id,name,description,logo-url,square-logo-url,num-followers)?oauth2_access_token=%@&format=json", accessToken] parameters:nil success:^(AFHTTPRequestOperation *operation, NSDictionary *result) {
         NSLog(@"company %@", result);
         
-        // Load company logo
-        NSURL *imageURL = [NSURL URLWithString:result[@"logoUrl"]];
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
-            NSData *imageData = [NSData dataWithContentsOfURL:imageURL];
-            dispatch_async(dispatch_get_main_queue(), ^{
-                // Update the UI
-                self.companyLogoImageView.image = [UIImage imageWithData:imageData];
-            });
-        });
+        // Images
+        [self loadImageView:self.companyLogoImageView withURL:result[@"logoUrl"]];
+        [self loadImageView:self.squareLogoImageView withURL:result[@"squareLogoUrl"]];
         
         // Load company name
         self.companyNameLabel.text = result[@"name"];
@@ -101,19 +93,31 @@
         // Number of followers
         self.numFollowersLabel.text = [result[@"numFollowers"] stringValue];
         
-        // Comapny description
+        // Company description
         self.textView.text = result[@"description"];
         
+        // Calculate the required size for the text and adjust the constraint
+        CGSize maxSize = CGSizeMake(self.textView.frame.size.width, CGFLOAT_MAX);
+        CGSize requiredSize = [self.textView sizeThatFits:maxSize];
+        self.descriptionTextViewHeightConstraint.constant = requiredSize.height;
+        
+        // Animate the text view height change
+        [UIView animateWithDuration:0.5 animations:^{
+            [self.view layoutIfNeeded];
+        }];
+        
+        
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"failed to fetch current user %@", error);
+        NSLog(@"failed to get company info %@", error);
     }];
 }
 
 - (void)getCompanyJobPostings:(NSString *)accessToken {
     [self.client GET:[NSString stringWithFormat:@"https://api.linkedin.com/v1/companies/14148/updates?event-type=job-posting&oauth2_access_token=%@&format=json", accessToken] parameters:nil success:^(AFHTTPRequestOperation *operation, NSDictionary *result) {
-        NSLog(@"company %@", result);
+        NSLog(@"jobs %@", result);
+        // "_total" = 0;
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"failed to fetch current user %@", error);
+        NSLog(@"failed to get company job postings %@", error);
     }];
 }
 
@@ -126,6 +130,22 @@
         </company>*/
 }
 
+// Get people connected to the the current user.
+// Need vetted access!
+- (void)getConnectionsWithToken:(NSString *)accessToken {
+    [self.client GET:[NSString stringWithFormat:@"https://api.linkedin.com/v1/people-search?company-name=new-zealand-defence-force&oauth2_access_token=%@&format=json", accessToken] parameters:nil success:^(AFHTTPRequestOperation *operation, NSDictionary *result) {
+        NSLog(@"connections %@", result);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"failed to get connections info %@", error);
+    }];
+    
+    // http://api.linkedin.com/v1/people/~:(connections:(id,first-name,last-name,picture-url,headline,site-standard-profile-request:(url),positions:(company)))
+    // http://api.linkedin.com/v1/people-search:(people:(id,first-name,last-name,picture-url,headline,site-standard-profile-request:(url)),num-results)?facet=network,F,S&company-name={0}&current-company=true&count=1
+    // http://api.linkedin.com/v1/people-search?company-name={company name}
+
+
+}
+
 #pragma mark - Helpers
 
 // Get the Access Token stored in user defaults.
@@ -134,6 +154,17 @@
     NSString *accessToken = [userDefaults objectForKey:LINKEDIN_TOKEN_KEY];
     assert(accessToken != nil || ![accessToken isEqualToString:@""]);
     return accessToken;
+}
+
+// Load image view with image located at given URL.
+- (void)loadImageView:(UIImageView *)imageView withURL:(NSString *)url {
+    NSURL *imageURL = [NSURL URLWithString:url];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+        NSData *imageData = [NSData dataWithContentsOfURL:imageURL];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            imageView.image = [UIImage imageWithData:imageData];
+        });
+    });
 }
 
 // Initialise a LinkedInClient
