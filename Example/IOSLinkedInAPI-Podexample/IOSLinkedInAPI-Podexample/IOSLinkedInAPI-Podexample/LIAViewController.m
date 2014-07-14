@@ -15,7 +15,10 @@
 #define LINKEDIN_TOKEN_KEY @"linkedin_token"    // Move this from httpclient.m to .h
 #define COLOR_RGBA(RED,GREEN,BLUE,ALPHA) [UIColor colorWithRed:RED/255.0f green:GREEN/255.0f blue:BLUE/255.0f alpha:ALPHA/1.0f]
 
+#define DESCRIPTION_TEXT_DEFAULT_HEIGHT 175.0f
+
 @interface LIAViewController ()
+@property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 
 @property (weak, nonatomic) IBOutlet UIImageView *companyLogoImageView;
 @property (weak, nonatomic) IBOutlet UILabel *companyNameLabel;
@@ -26,6 +29,8 @@
 
 @property (weak, nonatomic) IBOutlet UITextView *textView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *descriptionTextViewHeightConstraint;
+@property (weak, nonatomic) IBOutlet UIImageView *descriptionDisclosureImageView;
+@property (weak, nonatomic) IBOutlet UIImageView *descriptionFadeImageView;
 
 @end
 
@@ -41,6 +46,9 @@
   //self.followButton.layer.borderWidth = 1.0f;
   //self.followButton.layer.borderColor = COLOR_RGBA(233,172,26,1).CGColor;
   self.followButton.layer.cornerRadius = 3.0f;
+  
+  self.textView.textContainerInset = UIEdgeInsetsMake(10, 10, 20, 10);
+  //[NSNotificationCenter defaultCenter]
   
   [self getCompanyInfoWithToken:[self accessToken]];
 }
@@ -97,14 +105,14 @@
         self.textView.text = result[@"description"];
         
         // Calculate the required size for the text and adjust the constraint
-        CGSize maxSize = CGSizeMake(self.textView.frame.size.width, CGFLOAT_MAX);
+        /*CGSize maxSize = CGSizeMake(self.textView.frame.size.width, CGFLOAT_MAX);
         CGSize requiredSize = [self.textView sizeThatFits:maxSize];
         self.descriptionTextViewHeightConstraint.constant = requiredSize.height;
         
         // Animate the text view height change
         [UIView animateWithDuration:0.5 animations:^{
             [self.view layoutIfNeeded];
-        }];
+        }];*/
         
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -145,6 +153,52 @@
 
 
 }
+
+- (IBAction)descriptionGestureTap:(UITapGestureRecognizer *)sender {
+
+    // Calculate the required size for the text and adjust the constraint
+    CGSize maxSize = CGSizeMake(self.textView.frame.size.width, CGFLOAT_MAX);
+    CGSize requiredSize = [self.textView sizeThatFits:maxSize];
+    float rotation = 0;
+    float fadeImageViewAlpha = 1.0f;
+
+    if(self.descriptionTextViewHeightConstraint.constant == DESCRIPTION_TEXT_DEFAULT_HEIGHT) {
+        self.descriptionTextViewHeightConstraint.constant = requiredSize.height;
+        fadeImageViewAlpha = 0.0f;
+        rotation = M_PI/2;
+    }
+    else
+        self.descriptionTextViewHeightConstraint.constant = DESCRIPTION_TEXT_DEFAULT_HEIGHT;
+    
+    // Animate the text view height change
+    [UIView animateWithDuration:0.5 animations:^{
+        [self.view layoutIfNeeded];
+        self.descriptionDisclosureImageView.transform = CGAffineTransformMakeRotation(rotation);
+        self.descriptionFadeImageView.alpha = fadeImageViewAlpha;
+    } completion:^(BOOL finished){
+        CGRect textViewFrame = self.textView.frame;
+        textViewFrame.size.height += 20.0f;
+        [self.scrollView scrollRectToVisible:textViewFrame animated:YES];
+    }];    
+
+
+}
+
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
+    [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
+    
+    if(self.descriptionTextViewHeightConstraint.constant != DESCRIPTION_TEXT_DEFAULT_HEIGHT) {
+        CGSize maxSize = CGSizeMake(self.textView.frame.size.width, CGFLOAT_MAX);
+        CGSize requiredSize = [self.textView sizeThatFits:maxSize];
+        self.descriptionTextViewHeightConstraint.constant = requiredSize.height;
+    
+        // Animate the text view height change
+        [UIView animateWithDuration:0.5 animations:^{
+            [self.view layoutIfNeeded];
+        }];
+    }
+}
+
 
 #pragma mark - Helpers
 
