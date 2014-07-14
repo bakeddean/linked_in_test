@@ -23,6 +23,8 @@
 
 @interface LIAViewController () <UITableViewDataSource>
 
+@property (nonatomic, strong) LIACompany *company;
+
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 
 // Company name/data properties
@@ -50,13 +52,12 @@
   NSArray *_leftTableTitles, *_rightTableTitles;
 }
 
+#pragma mark - View Controller life cycle
+
 - (void)viewDidLoad {
   [super viewDidLoad];
   _client = [self client];
   
-  // Style follow button
-  //self.followButton.layer.borderWidth = 1.0f;
-  //self.followButton.layer.borderColor = COLOR_RGBA(233,172,26,1).CGColor;
   self.followButton.layer.cornerRadius = 3.0f;
   self.textView.textContainerInset = UIEdgeInsetsMake(10, 10, 20, 10);
   
@@ -69,6 +70,21 @@
   [self.rightTableView registerNib:[UINib nibWithNibName:@"LIATableViewCell" bundle:nil] forCellReuseIdentifier:@"Cell"];
   
   [self getCompanyInfoWithToken:[self accessToken]];
+}
+
+#pragma mark
+
+// Use the model data to populate the view.
+- (void)populateView {
+    self.companyNameLabel.text = self.company.name;
+    self.numFollowersLabel.text = [NSString stringWithFormat:@"%@ followers", self.company.numFollowers];
+    self.textView.text = self.company.description;
+    
+    [self loadImageView:self.companyLogoImageView withURL:self.company.logoUrl];
+    [self loadImageView:self.squareLogoImageView withURL:self.company.squareLogoUrl];
+    
+    [self.leftTableView reloadData];
+    [self.rightTableView reloadData];
 }
 
 #pragma mark - Button actions
@@ -98,7 +114,8 @@
 #pragma mark - LinkedIn requests
 
 - (void)requestMeWithToken:(NSString *)accessToken {
-    [self.client GET:[NSString stringWithFormat:@"https://api.linkedin.com/v1/people/~?oauth2_access_token=%@&format=json", accessToken] parameters:nil success:^(AFHTTPRequestOperation *operation, NSDictionary *result) {
+    NSString *request = [NSString stringWithFormat:@"%@/people/~?oauth2_access_token=%@&format=json",BASE_URL,accessToken];
+    [self.client GET:request parameters:nil success:^(AFHTTPRequestOperation *operation, NSDictionary *result) {
         NSLog(@"current user %@", result);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"failed to fetch current user %@", error);
@@ -110,28 +127,9 @@
     NSString *universalName = @"new-zealand-defence-force";
     NSString *request = [NSString stringWithFormat:@"%@/companies/universal-name=%@%@?oauth2_access_token=%@&format=json", BASE_URL,universalName,fields,accessToken];
     
-    NSLog(@"%@",request);
-    
     [self.client GET:request parameters:nil success:^(AFHTTPRequestOperation *operation, NSDictionary *result) {
-    /*[self.client GET:[NSString stringWithFormat:@"https://api.linkedin.com/v1/companies/universal-name=new-zealand-defence-force:(id,name,description,logo-url,square-logo-url,num-followers,locations,website-url,company-type,industries,employee-count-range)?oauth2_access_token=%@&format=json", accessToken] parameters:nil success:^(AFHTTPRequestOperation *operation, NSDictionary *result) {*/
-        NSLog(@"company %@", result);
-        
-        // Images
-        [self loadImageView:self.companyLogoImageView withURL:result[@"logoUrl"]];
-        [self loadImageView:self.squareLogoImageView withURL:result[@"squareLogoUrl"]];
-        
-        // Load company name
-        self.companyNameLabel.text = result[@"name"];
-        
-        // Number of followers
-        NSString *numFollowers = [result[@"numFollowers"] stringValue];
-        self.numFollowersLabel.text = [NSString stringWithFormat:@"%@ followers", numFollowers];
-        
-        // Company description
-        self.textView.text = result[@"description"];
-        
-        LIACompany *company = [[LIACompany alloc]initWithDictionary:result];
-        NSLog(@"bob");
+        self.company = [[LIACompany alloc]initWithDictionary:result];
+        [self populateView];
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"failed to get company info %@", error);
@@ -156,8 +154,7 @@
         </company>*/
 }
 
-// Get people connected to the the current user.
-// Need vetted access!
+// Get people connected to the the current user. Need vetted access!
 - (void)getConnectionsWithToken:(NSString *)accessToken {
     [self.client GET:[NSString stringWithFormat:@"https://api.linkedin.com/v1/people-search?company-name=new-zealand-defence-force&oauth2_access_token=%@&format=json", accessToken] parameters:nil success:^(AFHTTPRequestOperation *operation, NSDictionary *result) {
         NSLog(@"connections %@", result);
@@ -168,9 +165,9 @@
     // http://api.linkedin.com/v1/people/~:(connections:(id,first-name,last-name,picture-url,headline,site-standard-profile-request:(url),positions:(company)))
     // http://api.linkedin.com/v1/people-search:(people:(id,first-name,last-name,picture-url,headline,site-standard-profile-request:(url)),num-results)?facet=network,F,S&company-name={0}&current-company=true&count=1
     // http://api.linkedin.com/v1/people-search?company-name={company name}
-
-
 }
+
+#pragma mark
 
 // User has tapped on the Description header view. Toggle between the truncated
 // or full display of the description text.
@@ -202,7 +199,7 @@
     }];
 }
 
-#pragma mark - TableViewDatasource protocol
+#pragma mark - TableViewDataSource protocol
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return tableView == self.leftTableView ? [_leftTableTitles count] : [_rightTableTitles count];
@@ -212,14 +209,27 @@
     static NSString *identifier = @"Cell";
     LIATableViewCell *cell = (LIATableViewCell *)[tableView dequeueReusableCellWithIdentifier:identifier forIndexPath:indexPath];
     
+    // Left table
     if(tableView == self.leftTableView) {
         cell.leftLabel.text = _leftTableTitles[indexPath.row];
+        if(indexPath.row == 0)
+            cell.rightLabel.text = self.company.locations;
+        else if(indexPath.row == 1){
+            cell.rightLabel.text = self.company.websiteUrl;
+            cell.rightLabel.textColor = [UIColor blueColor];
+        }
     }
+    
+    // Right table
     else {
         cell.leftLabel.text = _rightTableTitles[indexPath.row];
+        if(indexPath.row == 0)
+            cell.rightLabel.text = self.company.companyType;
+        else if (indexPath.row == 1)
+            cell.rightLabel.text = self.company.industries;
+        else if (indexPath.row == 2)
+            cell.rightLabel.text = self.company.employeeCountRange;
     }
-    //[cell.leftLabel sizeToFit];
-    cell.rightLabel.text = @"bob";
     return cell;
 }
 
@@ -239,7 +249,6 @@
         }];
     }
 }
-
 
 #pragma mark - Helpers
 
