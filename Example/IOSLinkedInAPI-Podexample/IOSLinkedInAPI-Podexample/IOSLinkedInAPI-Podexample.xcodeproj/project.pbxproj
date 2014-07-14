@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		058C69A5197387D5004ECB02 /* LIATableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 058C69A3197387D5004ECB02 /* LIATableViewCell.m */; };
+		058C69A6197387D5004ECB02 /* LIATableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 058C69A4197387D5004ECB02 /* LIATableViewCell.xib */; };
 		16AD612F556B4B92ADB38EEF /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 35282DA869D54E88A071E44A /* libPods.a */; };
 		33AE657C185FA2E400981915 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 33AE657B185FA2E400981915 /* Foundation.framework */; };
 		33AE657E185FA2E400981915 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 33AE657D185FA2E400981915 /* CoreGraphics.framework */; };
@@ -37,6 +39,9 @@
 
 /* Begin PBXFileReference section */
 		058C699E196CD67B004ECB02 /* LIALinkedInClientExampleCredentials.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LIALinkedInClientExampleCredentials.h; sourceTree = "<group>"; };
+		058C69A2197387D5004ECB02 /* LIATableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LIATableViewCell.h; sourceTree = "<group>"; };
+		058C69A3197387D5004ECB02 /* LIATableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LIATableViewCell.m; sourceTree = "<group>"; };
+		058C69A4197387D5004ECB02 /* LIATableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LIATableViewCell.xib; sourceTree = "<group>"; };
 		33AE6578185FA2E400981915 /* IOSLinkedInAPI-Podexample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "IOSLinkedInAPI-Podexample.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		33AE657B185FA2E400981915 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		33AE657D185FA2E400981915 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -132,6 +137,9 @@
 				33AE6596185FA2E400981915 /* Images.xcassets */,
 				33AE6582185FA2E400981915 /* Supporting Files */,
 				058C699E196CD67B004ECB02 /* LIALinkedInClientExampleCredentials.h */,
+				058C69A2197387D5004ECB02 /* LIATableViewCell.h */,
+				058C69A3197387D5004ECB02 /* LIATableViewCell.m */,
+				058C69A4197387D5004ECB02 /* LIATableViewCell.xib */,
 			);
 			path = "IOSLinkedInAPI-Podexample";
 			sourceTree = "<group>";
@@ -247,6 +255,7 @@
 				33AE6592185FA2E400981915 /* Main_iPad.storyboard in Resources */,
 				33AE6597185FA2E400981915 /* Images.xcassets in Resources */,
 				33AE658F185FA2E400981915 /* Main_iPhone.storyboard in Resources */,
+				058C69A6197387D5004ECB02 /* LIATableViewCell.xib in Resources */,
 				33AE6586185FA2E400981915 /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -301,6 +310,7 @@
 			files = (
 				33AE6588185FA2E400981915 /* main.m in Sources */,
 				33AE658C185FA2E400981915 /* LIAAppDelegate.m in Sources */,
+				058C69A5197387D5004ECB02 /* LIATableViewCell.m in Sources */,
 				33AE6595185FA2E400981915 /* LIAViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

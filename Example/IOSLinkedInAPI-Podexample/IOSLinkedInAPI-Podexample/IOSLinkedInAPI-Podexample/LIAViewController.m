@@ -11,31 +11,40 @@
 #import "LIALinkedInHttpClient.h"
 #import "LIALinkedInClientExampleCredentials.h"
 #import "LIALinkedInApplication.h"
+#import "LIATableViewCell.h"
 
 #define LINKEDIN_TOKEN_KEY @"linkedin_token"    // Move this from httpclient.m to .h
 #define COLOR_RGBA(RED,GREEN,BLUE,ALPHA) [UIColor colorWithRed:RED/255.0f green:GREEN/255.0f blue:BLUE/255.0f alpha:ALPHA/1.0f]
 
 #define DESCRIPTION_TEXT_DEFAULT_HEIGHT 175.0f
 
-@interface LIAViewController ()
+@interface LIAViewController () <UITableViewDataSource>
+
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 
+// Company name/data properties
 @property (weak, nonatomic) IBOutlet UIImageView *companyLogoImageView;
 @property (weak, nonatomic) IBOutlet UILabel *companyNameLabel;
-
 @property (weak, nonatomic) IBOutlet UILabel *numFollowersLabel;
 @property (weak, nonatomic) IBOutlet UIButton *followButton;
-@property (weak, nonatomic) IBOutlet UIImageView *squareLogoImageView;
 
+@property (weak, nonatomic) IBOutlet UITableView *leftTableView;
+@property (weak, nonatomic) IBOutlet UITableView *rightTableView;
+
+// Description properties
 @property (weak, nonatomic) IBOutlet UITextView *textView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *descriptionTextViewHeightConstraint;
 @property (weak, nonatomic) IBOutlet UIImageView *descriptionDisclosureImageView;
 @property (weak, nonatomic) IBOutlet UIImageView *descriptionFadeImageView;
 
+// Careers properties
+@property (weak, nonatomic) IBOutlet UIImageView *squareLogoImageView;
+
 @end
 
 @implementation LIAViewController {
   LIALinkedInHttpClient *_client;
+  NSArray *_leftTableTitles, *_rightTableTitles;
 }
 
 - (void)viewDidLoad {
@@ -46,9 +55,15 @@
   //self.followButton.layer.borderWidth = 1.0f;
   //self.followButton.layer.borderColor = COLOR_RGBA(233,172,26,1).CGColor;
   self.followButton.layer.cornerRadius = 3.0f;
-  
   self.textView.textContainerInset = UIEdgeInsetsMake(10, 10, 20, 10);
-  //[NSNotificationCenter defaultCenter]
+  
+  self.leftTableView.dataSource = self;
+  self.rightTableView.dataSource = self;
+  _leftTableTitles = @[@"Headquarters",@"Website"];
+  _rightTableTitles = @[@"Type",@"Industry",@"Company Size"];
+  
+  [self.leftTableView registerNib:[UINib nibWithNibName:@"LIATableViewCell" bundle:nil] forCellReuseIdentifier:@"Cell"];
+  [self.rightTableView registerNib:[UINib nibWithNibName:@"LIATableViewCell" bundle:nil] forCellReuseIdentifier:@"Cell"];
   
   [self getCompanyInfoWithToken:[self accessToken]];
 }
@@ -99,7 +114,8 @@
         self.companyNameLabel.text = result[@"name"];
         
         // Number of followers
-        self.numFollowersLabel.text = [result[@"numFollowers"] stringValue];
+        NSString *numFollowers = [result[@"numFollowers"] stringValue];
+        self.numFollowersLabel.text = [NSString stringWithFormat:@"%@ followers", numFollowers];
         
         // Company description
         self.textView.text = result[@"description"];
@@ -154,6 +170,8 @@
 
 }
 
+// User has tapped on the Description header view. Toggle between the truncated
+// or full display of the description text.
 - (IBAction)descriptionGestureTap:(UITapGestureRecognizer *)sender {
 
     // Calculate the required size for the text and adjust the constraint
@@ -171,7 +189,7 @@
         self.descriptionTextViewHeightConstraint.constant = DESCRIPTION_TEXT_DEFAULT_HEIGHT;
     
     // Animate the text view height change
-    [UIView animateWithDuration:0.5 animations:^{
+    [UIView animateWithDuration:0.3 animations:^{
         [self.view layoutIfNeeded];
         self.descriptionDisclosureImageView.transform = CGAffineTransformMakeRotation(rotation);
         self.descriptionFadeImageView.alpha = fadeImageViewAlpha;
@@ -179,10 +197,31 @@
         CGRect textViewFrame = self.textView.frame;
         textViewFrame.size.height += 20.0f;
         [self.scrollView scrollRectToVisible:textViewFrame animated:YES];
-    }];    
-
-
+    }];
 }
+
+#pragma mark - TableViewDatasource protocol
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return tableView == self.leftTableView ? [_leftTableTitles count] : [_rightTableTitles count];
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    static NSString *identifier = @"Cell";
+    LIATableViewCell *cell = (LIATableViewCell *)[tableView dequeueReusableCellWithIdentifier:identifier forIndexPath:indexPath];
+    
+    if(tableView == self.leftTableView) {
+        cell.leftLabel.text = _leftTableTitles[indexPath.row];
+    }
+    else {
+        cell.leftLabel.text = _rightTableTitles[indexPath.row];
+    }
+    //[cell.leftLabel sizeToFit];
+    cell.rightLabel.text = @"bob";
+    return cell;
+}
+
+#pragma mark - UIViewController orientation event
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
     [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
