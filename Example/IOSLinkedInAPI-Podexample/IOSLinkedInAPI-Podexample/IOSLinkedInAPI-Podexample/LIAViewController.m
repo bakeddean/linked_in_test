@@ -12,9 +12,12 @@
 #import "LIALinkedInClientExampleCredentials.h"
 #import "LIALinkedInApplication.h"
 #import "LIATableViewCell.h"
+#import "LIACompany.h"
 
 #define LINKEDIN_TOKEN_KEY @"linkedin_token"    // Move this from httpclient.m to .h
 #define COLOR_RGBA(RED,GREEN,BLUE,ALPHA) [UIColor colorWithRed:RED/255.0f green:GREEN/255.0f blue:BLUE/255.0f alpha:ALPHA/1.0f]
+
+#define BASE_URL @"https://api.linkedin.com/v1"
 
 #define DESCRIPTION_TEXT_DEFAULT_HEIGHT 175.0f
 
@@ -103,7 +106,14 @@
 }
 
 - (void)getCompanyInfoWithToken:(NSString *)accessToken {
-    [self.client GET:[NSString stringWithFormat:@"https://api.linkedin.com/v1/companies/universal-name=new-zealand-defence-force:(id,name,description,logo-url,square-logo-url,num-followers)?oauth2_access_token=%@&format=json", accessToken] parameters:nil success:^(AFHTTPRequestOperation *operation, NSDictionary *result) {
+    NSString *fields = @":(id,name,description,logo-url,square-logo-url,num-followers,locations,website-url,company-type,industries,employee-count-range)";
+    NSString *universalName = @"new-zealand-defence-force";
+    NSString *request = [NSString stringWithFormat:@"%@/companies/universal-name=%@%@?oauth2_access_token=%@&format=json", BASE_URL,universalName,fields,accessToken];
+    
+    NSLog(@"%@",request);
+    
+    [self.client GET:request parameters:nil success:^(AFHTTPRequestOperation *operation, NSDictionary *result) {
+    /*[self.client GET:[NSString stringWithFormat:@"https://api.linkedin.com/v1/companies/universal-name=new-zealand-defence-force:(id,name,description,logo-url,square-logo-url,num-followers,locations,website-url,company-type,industries,employee-count-range)?oauth2_access_token=%@&format=json", accessToken] parameters:nil success:^(AFHTTPRequestOperation *operation, NSDictionary *result) {*/
         NSLog(@"company %@", result);
         
         // Images
@@ -120,16 +130,8 @@
         // Company description
         self.textView.text = result[@"description"];
         
-        // Calculate the required size for the text and adjust the constraint
-        /*CGSize maxSize = CGSizeMake(self.textView.frame.size.width, CGFLOAT_MAX);
-        CGSize requiredSize = [self.textView sizeThatFits:maxSize];
-        self.descriptionTextViewHeightConstraint.constant = requiredSize.height;
-        
-        // Animate the text view height change
-        [UIView animateWithDuration:0.5 animations:^{
-            [self.view layoutIfNeeded];
-        }];*/
-        
+        LIACompany *company = [[LIACompany alloc]initWithDictionary:result];
+        NSLog(@"bob");
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"failed to get company info %@", error);

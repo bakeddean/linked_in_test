@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		058C69A5197387D5004ECB02 /* LIATableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 058C69A3197387D5004ECB02 /* LIATableViewCell.m */; };
 		058C69A6197387D5004ECB02 /* LIATableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 058C69A4197387D5004ECB02 /* LIATableViewCell.xib */; };
+		058C69AA19739490004ECB02 /* LIACompany.m in Sources */ = {isa = PBXBuildFile; fileRef = 058C69A919739490004ECB02 /* LIACompany.m */; };
 		16AD612F556B4B92ADB38EEF /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 35282DA869D54E88A071E44A /* libPods.a */; };
 		33AE657C185FA2E400981915 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 33AE657B185FA2E400981915 /* Foundation.framework */; };
 		33AE657E185FA2E400981915 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 33AE657D185FA2E400981915 /* CoreGraphics.framework */; };
@@ -42,6 +43,8 @@
 		058C69A2197387D5004ECB02 /* LIATableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LIATableViewCell.h; sourceTree = "<group>"; };
 		058C69A3197387D5004ECB02 /* LIATableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LIATableViewCell.m; sourceTree = "<group>"; };
 		058C69A4197387D5004ECB02 /* LIATableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LIATableViewCell.xib; sourceTree = "<group>"; };
+		058C69A819739490004ECB02 /* LIACompany.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LIACompany.h; sourceTree = "<group>"; };
+		058C69A919739490004ECB02 /* LIACompany.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LIACompany.m; sourceTree = "<group>"; };
 		33AE6578185FA2E400981915 /* IOSLinkedInAPI-Podexample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "IOSLinkedInAPI-Podexample.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		33AE657B185FA2E400981915 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		33AE657D185FA2E400981915 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -92,6 +95,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		058C69A719739473004ECB02 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				058C69A819739490004ECB02 /* LIACompany.h */,
+				058C69A919739490004ECB02 /* LIACompany.m */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		33AE656F185FA2E400981915 = {
 			isa = PBXGroup;
 			children = (
@@ -128,6 +140,7 @@
 		33AE6581185FA2E400981915 /* IOSLinkedInAPI-Podexample */ = {
 			isa = PBXGroup;
 			children = (
+				058C69A719739473004ECB02 /* Models */,
 				33AE658A185FA2E400981915 /* LIAAppDelegate.h */,
 				33AE658B185FA2E400981915 /* LIAAppDelegate.m */,
 				33AE658D185FA2E400981915 /* Main_iPhone.storyboard */,
@@ -309,6 +322,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				33AE6588185FA2E400981915 /* main.m in Sources */,
+				058C69AA19739490004ECB02 /* LIACompany.m in Sources */,
 				33AE658C185FA2E400981915 /* LIAAppDelegate.m in Sources */,
 				058C69A5197387D5004ECB02 /* LIATableViewCell.m in Sources */,
 				33AE6595185FA2E400981915 /* LIAViewController.m in Sources */,
