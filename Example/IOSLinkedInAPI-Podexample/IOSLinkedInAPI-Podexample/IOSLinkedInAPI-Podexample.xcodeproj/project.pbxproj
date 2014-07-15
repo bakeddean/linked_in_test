@@ -12,7 +12,6 @@
 		058C69B01974AB5B004ECB02 /* LIATableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 058C69AF1974AB5A004ECB02 /* LIATableViewCell.xib */; };
 		058C69B41974AB93004ECB02 /* LIAViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 058C69B31974AB93004ECB02 /* LIAViewController.m */; };
 		058C69B71974AC46004ECB02 /* NZDFLinkedInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 058C69B61974AC46004ECB02 /* NZDFLinkedInViewController.m */; };
-		058C69BA1974CB05004ECB02 /* NZDFLinkedInSignInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 058C69B91974CB05004ECB02 /* NZDFLinkedInSignInViewController.m */; };
 		16AD612F556B4B92ADB38EEF /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 35282DA869D54E88A071E44A /* libPods.a */; };
 		33AE657C185FA2E400981915 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 33AE657B185FA2E400981915 /* Foundation.framework */; };
 		33AE657E185FA2E400981915 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 33AE657D185FA2E400981915 /* CoreGraphics.framework */; };
@@ -51,8 +50,6 @@
 		058C69B31974AB93004ECB02 /* LIAViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LIAViewController.m; sourceTree = "<group>"; };
 		058C69B51974AC3F004ECB02 /* NZDFLinkedInViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NZDFLinkedInViewController.h; sourceTree = "<group>"; };
 		058C69B61974AC46004ECB02 /* NZDFLinkedInViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NZDFLinkedInViewController.m; sourceTree = "<group>"; };
-		058C69B81974CB05004ECB02 /* NZDFLinkedInSignInViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NZDFLinkedInSignInViewController.h; sourceTree = "<group>"; };
-		058C69B91974CB05004ECB02 /* NZDFLinkedInSignInViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NZDFLinkedInSignInViewController.m; sourceTree = "<group>"; };
 		33AE6578185FA2E400981915 /* IOSLinkedInAPI-Podexample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "IOSLinkedInAPI-Podexample.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		33AE657B185FA2E400981915 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		33AE657D185FA2E400981915 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -127,8 +124,6 @@
 				058C69B51974AC3F004ECB02 /* NZDFLinkedInViewController.h */,
 				058C69B21974AB93004ECB02 /* LIAViewController.h */,
 				058C69B31974AB93004ECB02 /* LIAViewController.m */,
-				058C69B81974CB05004ECB02 /* NZDFLinkedInSignInViewController.h */,
-				058C69B91974CB05004ECB02 /* NZDFLinkedInSignInViewController.m */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -347,7 +342,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				058C69BA1974CB05004ECB02 /* NZDFLinkedInSignInViewController.m in Sources */,
 				33AE6588185FA2E400981915 /* main.m in Sources */,
 				058C69AE1974AB54004ECB02 /* LIATableViewCell.m in Sources */,
 				058C69B71974AC46004ECB02 /* NZDFLinkedInViewController.m in Sources */,

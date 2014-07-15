@@ -22,18 +22,18 @@
 
 #define DESCRIPTION_TEXT_DEFAULT_HEIGHT 175.0f
 
-@interface LIAViewController () <UITableViewDataSource>
+@interface LIAViewController () <UITableViewDataSource, UITableViewDelegate>
 
 @property (nonatomic, strong) LIACompany *company;
 
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
+@property (nonatomic, strong) UIPopoverController *popover;
 
 // Company name/data properties
 @property (weak, nonatomic) IBOutlet UIImageView *companyLogoImageView;
 @property (weak, nonatomic) IBOutlet UILabel *companyNameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *numFollowersLabel;
 @property (weak, nonatomic) IBOutlet UIButton *followButton;
-
 @property (weak, nonatomic) IBOutlet UITableView *leftTableView;
 @property (weak, nonatomic) IBOutlet UITableView *rightTableView;
 
@@ -80,14 +80,8 @@
     
     // If we have no access token, display the sign in background image.
     NSString *accessToken = [self accessToken];
-    if(accessToken == nil || [accessToken isEqualToString:@""]) {
-        UIImageView *signInBackground = [[UIImageView alloc]initWithFrame:self.view.bounds];
-        signInBackground.contentMode = UIViewContentModeScaleToFill;
-        signInBackground.tag = 123;
-        signInBackground.image = [UIImage imageNamed:@"LinkedInSignInImage"];
-        [self.view addSubview:signInBackground];
-        [self.view bringSubviewToFront:signInBackground];
-    }
+    if(accessToken == nil || [accessToken isEqualToString:@""])
+        [self showSignInBackgroundView];
 }
 
 // If the sign in view is present, show the sign in dialog, else get company info.
@@ -100,16 +94,36 @@
         [self getCompanyInfoWithToken:[self accessToken]];
 }
 
-#pragma mark
+#pragma mark - View display and population.
+
+// Show sign in background image.
+- (void)showSignInBackgroundView {
+    UIImageView *signInBackground = [[UIImageView alloc]initWithFrame:self.view.bounds];
+    signInBackground.contentMode = UIViewContentModeScaleToFill;
+    signInBackground.tag = 123;
+    signInBackground.image = [UIImage imageNamed:@"LinkedInSignInImage"];
+    [self.view addSubview:signInBackground];
+    [self.view bringSubviewToFront:signInBackground];
+}
 
 // Fade out the temporary sign in background view, then remove from the view hierachy.
-- (void)hideSignInView {
+- (void)hideSignInBackgroundView {
     UIImageView *signInBackground = (UIImageView *)[self.view viewWithTag:123];
     [UIView animateWithDuration:0.5 animations:^{
         signInBackground.alpha = 0.0;
      } completion:^(BOOL finished){
         [signInBackground removeFromSuperview];
      }];
+}
+
+- (void)setSettingsText {
+    UITableViewController *tableViewController = (UITableViewController *)self.popover.contentViewController;
+    UITableViewCell *cell = [tableViewController.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
+    NSString *accessToken = [self accessToken];
+    if(accessToken == nil || [accessToken isEqualToString:@""])
+        cell.textLabel.text = @"Sign in";
+    else
+        cell.textLabel.text = @"Sign out";
 }
 
 // Use the model data to populate the view.
@@ -132,7 +146,7 @@
     [self.client getAuthorizationCode:^(NSString *code) {
         [self.client getAccessToken:code success:^(NSDictionary *accessTokenData) {
             [self getCompanyInfoWithToken:[self accessToken]];
-            [self hideSignInView];
+            [self hideSignInBackgroundView];
         } failure:^(NSError *error) {
             NSLog(@"Quering accessToken failed %@", error);
         }];
@@ -143,10 +157,16 @@
     }];
 }
 
-
+// Settings menu pop over.
 - (IBAction)userProfileTapped:(UIBarButtonItem *)sender {
-    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    [userDefaults setObject:@"" forKey:LINKEDIN_TOKEN_KEY];
+    if(!self.popover) {
+        UITableViewController *tableViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"LinkedInSettings"];
+        tableViewController.tableView.delegate = self;
+        self.popover = [[UIPopoverController alloc] initWithContentViewController:tableViewController];
+        self.popover.popoverContentSize = CGSizeMake(200,88);
+    }
+    [self.popover presentPopoverFromBarButtonItem:sender permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
+    [self setSettingsText];
 }
 
 // User tapped link in company details table.
@@ -192,10 +212,25 @@
     }];
 }
 
-// Get job postings
-- (IBAction)jobsTapped:(id)sender {
-    //[self getCompanyJobPostings:[self accessToken]];
-    [self getConnectionsWithToken:[self accessToken]];
+#pragma mark - TableViewDelegate protocol
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+    
+    // Sign in
+    if([cell.textLabel.text isEqualToString:@"Sign in"]) {
+        [self.popover dismissPopoverAnimated:YES];
+        if([self.view viewWithTag:123] != nil)
+            [self connectWithLinkedIn];
+    }
+    
+    // Sign out
+    else {
+        NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+        [userDefaults setObject:@"" forKey:LINKEDIN_TOKEN_KEY];
+        [self.popover dismissPopoverAnimated:YES];
+        [self showSignInBackgroundView];
+    }
 }
 
 #pragma mark - LinkedIn requests

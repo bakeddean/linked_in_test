@@ -4,32 +4,47 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
     <scenes>
-        <!--Linked In Sign In View Controller-->
-        <scene sceneID="55R-fQ-G93">
+        <!--Table View Controller-->
+        <scene sceneID="Tem-fS-SnQ">
             <objects>
-                <viewController id="9rA-8i-wKV" customClass="NZDFLinkedInSignInViewController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="wzr-us-jlg"/>
-                        <viewControllerLayoutGuide type="bottom" id="ZiN-ZJ-IPm"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="djg-Db-EXb">
-                        <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="LinkedInSignInImage" translatesAutoresizingMaskIntoConstraints="NO" id="gOO-hq-sCH">
-                                <rect key="frame" x="0.0" y="64" width="1024" height="706"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                            </imageView>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                        <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
-                    </view>
-                    <navigationItem key="navigationItem" id="828-9t-eUs"/>
-                    <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="WQf-cY-aR7" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tableViewController storyboardIdentifier="LinkedInSettings" id="sQs-yG-0Ku" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="JbT-Ze-40V">
+                        <rect key="frame" x="0.0" y="0.0" width="540" height="620"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <sections>
+                            <tableViewSection id="NX4-PG-C0n">
+                                <cells>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="P8m-Ge-OfD" style="IBUITableViewCellStyleDefault" id="0mt-A1-8gT">
+                                        <rect key="frame" x="0.0" y="0.0" width="540" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="0mt-A1-8gT" id="egS-kq-2SK">
+                                            <rect key="frame" x="0.0" y="0.0" width="540" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Sign in" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="P8m-Ge-OfD">
+                                                    <rect key="frame" x="15" y="0.0" width="510" height="43"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                        </sections>
+                        <connections>
+                            <outlet property="dataSource" destination="sQs-yG-0Ku" id="BJc-lr-0xQ"/>
+                            <outlet property="delegate" destination="sQs-yG-0Ku" id="UII-tL-adM"/>
+                        </connections>
+                    </tableView>
+                    <modalFormSheetSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="mq0-47-9zO" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1280" y="-1091"/>
+            <point key="canvasLocation" x="2417" y="-872"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
@@ -400,7 +415,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QLo-5P-Ifs" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="37" y="-91"/>
+            <point key="canvasLocation" x="1013" y="-91"/>
         </scene>
         <!--Linked In View Controller-->
         <scene sceneID="hKv-00-E1t">
@@ -483,7 +498,6 @@
         <image name="ArrowIconBackUnselected" width="26" height="20"/>
         <image name="HomeIconUnselected" width="27" height="26"/>
         <image name="IconRightArrow" width="15" height="15"/>
-        <image name="LinkedInSignInImage" width="224" height="149"/>
         <image name="PersonIcon" width="25" height="25"/>
         <image name="PersonImage" width="256" height="256"/>
         <image name="WhiteGradient" width="1" height="1"/>
