@@ -60,6 +60,7 @@
   [super viewDidLoad];
   _client = [self client];
   
+  self.navigationItem.hidesBackButton = YES;
   self.followButton.layer.cornerRadius = 3.0f;
   self.learnMoreButton.layer.cornerRadius = 3.0f;
   
@@ -72,11 +73,44 @@
   
   [self.leftTableView registerNib:[UINib nibWithNibName:@"LIATableViewCell" bundle:nil] forCellReuseIdentifier:@"Cell"];
   [self.rightTableView registerNib:[UINib nibWithNibName:@"LIATableViewCell" bundle:nil] forCellReuseIdentifier:@"Cell"];
-  
-  [self getCompanyInfoWithToken:[self accessToken]];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    
+    // If we have no access token, display the sign in background image.
+    NSString *accessToken = [self accessToken];
+    if(accessToken == nil || [accessToken isEqualToString:@""]) {
+        UIImageView *signInBackground = [[UIImageView alloc]initWithFrame:self.view.bounds];
+        signInBackground.contentMode = UIViewContentModeScaleToFill;
+        signInBackground.tag = 123;
+        signInBackground.image = [UIImage imageNamed:@"LinkedInSignInImage"];
+        [self.view addSubview:signInBackground];
+        [self.view bringSubviewToFront:signInBackground];
+    }
+}
+
+// If the sign in view is present, show the sign in dialog, else get company info.
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    
+    if([self.view viewWithTag:123] != nil)
+        [self connectWithLinkedIn];
+    else
+        [self getCompanyInfoWithToken:[self accessToken]];
 }
 
 #pragma mark
+
+// Fade out the temporary sign in background view, then remove from the view hierachy.
+- (void)hideSignInView {
+    UIImageView *signInBackground = (UIImageView *)[self.view viewWithTag:123];
+    [UIView animateWithDuration:0.5 animations:^{
+        signInBackground.alpha = 0.0;
+     } completion:^(BOOL finished){
+        [signInBackground removeFromSuperview];
+     }];
+}
 
 // Use the model data to populate the view.
 - (void)populateView {
@@ -94,11 +128,11 @@
 #pragma mark - User actions
 
 // Sign in to LinkedIn
-- (IBAction)didTapConnectWithLinkedIn:(id)sender {
+- (void)connectWithLinkedIn {
     [self.client getAuthorizationCode:^(NSString *code) {
         [self.client getAccessToken:code success:^(NSDictionary *accessTokenData) {
-            NSString *accessToken = [accessTokenData objectForKey:@"access_token"];
-            [self requestMeWithToken:accessToken];
+            [self getCompanyInfoWithToken:[self accessToken]];
+            [self hideSignInView];
         } failure:^(NSError *error) {
             NSLog(@"Quering accessToken failed %@", error);
         }];
@@ -107,6 +141,12 @@
     } failure:^(NSError *error) {
         NSLog(@"Authorization failed %@", error);
     }];
+}
+
+
+- (IBAction)userProfileTapped:(UIBarButtonItem *)sender {
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    [userDefaults setObject:@"" forKey:LINKEDIN_TOKEN_KEY];
 }
 
 // User tapped link in company details table.
@@ -121,6 +161,35 @@
     NZDFLinkedInViewController *linkedInViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"LinkedInViewController"];
     linkedInViewController.url = @"http://www.defencecareers.mil.nz/";
     [self.navigationController pushViewController:linkedInViewController animated:YES];
+}
+
+// User has tapped on the Description header view. Toggle between the truncated or full display of the description text.
+- (IBAction)descriptionGestureTap:(UITapGestureRecognizer *)sender {
+
+    // Calculate the required size for the text and adjust the constraint
+    CGSize maxSize = CGSizeMake(self.textView.frame.size.width, CGFLOAT_MAX);
+    CGSize requiredSize = [self.textView sizeThatFits:maxSize];
+    float rotation = 0;
+    float fadeImageViewAlpha = 1.0f;
+
+    if(self.descriptionTextViewHeightConstraint.constant == DESCRIPTION_TEXT_DEFAULT_HEIGHT) {
+        self.descriptionTextViewHeightConstraint.constant = requiredSize.height;
+        fadeImageViewAlpha = 0.0f;
+        rotation = M_PI/2;
+    }
+    else
+        self.descriptionTextViewHeightConstraint.constant = DESCRIPTION_TEXT_DEFAULT_HEIGHT;
+    
+    // Animate the text view height change
+    [UIView animateWithDuration:0.3 animations:^{
+        [self.view layoutIfNeeded];
+        self.descriptionDisclosureImageView.transform = CGAffineTransformMakeRotation(rotation);
+        self.descriptionFadeImageView.alpha = fadeImageViewAlpha;
+    } completion:^(BOOL finished){
+        CGRect textViewFrame = self.textView.frame;
+        textViewFrame.size.height += 20.0f;
+        [self.scrollView scrollRectToVisible:textViewFrame animated:YES];
+    }];
 }
 
 // Get job postings
@@ -185,38 +254,6 @@
     // http://api.linkedin.com/v1/people-search?company-name={company name}
 }
 
-#pragma mark
-
-// User has tapped on the Description header view. Toggle between the truncated
-// or full display of the description text.
-- (IBAction)descriptionGestureTap:(UITapGestureRecognizer *)sender {
-
-    // Calculate the required size for the text and adjust the constraint
-    CGSize maxSize = CGSizeMake(self.textView.frame.size.width, CGFLOAT_MAX);
-    CGSize requiredSize = [self.textView sizeThatFits:maxSize];
-    float rotation = 0;
-    float fadeImageViewAlpha = 1.0f;
-
-    if(self.descriptionTextViewHeightConstraint.constant == DESCRIPTION_TEXT_DEFAULT_HEIGHT) {
-        self.descriptionTextViewHeightConstraint.constant = requiredSize.height;
-        fadeImageViewAlpha = 0.0f;
-        rotation = M_PI/2;
-    }
-    else
-        self.descriptionTextViewHeightConstraint.constant = DESCRIPTION_TEXT_DEFAULT_HEIGHT;
-    
-    // Animate the text view height change
-    [UIView animateWithDuration:0.3 animations:^{
-        [self.view layoutIfNeeded];
-        self.descriptionDisclosureImageView.transform = CGAffineTransformMakeRotation(rotation);
-        self.descriptionFadeImageView.alpha = fadeImageViewAlpha;
-    } completion:^(BOOL finished){
-        CGRect textViewFrame = self.textView.frame;
-        textViewFrame.size.height += 20.0f;
-        [self.scrollView scrollRectToVisible:textViewFrame animated:YES];
-    }];
-}
-
 #pragma mark - TableViewDataSource protocol
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -278,7 +315,7 @@
 - (NSString *)accessToken {
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     NSString *accessToken = [userDefaults objectForKey:LINKEDIN_TOKEN_KEY];
-    assert(accessToken != nil || ![accessToken isEqualToString:@""]);
+    //assert(accessToken != nil || ![accessToken isEqualToString:@""]);
     return accessToken;
 }
 

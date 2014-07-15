@@ -4,10 +4,37 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
     <scenes>
+        <!--Linked In Sign In View Controller-->
+        <scene sceneID="55R-fQ-G93">
+            <objects>
+                <viewController id="9rA-8i-wKV" customClass="NZDFLinkedInSignInViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="wzr-us-jlg"/>
+                        <viewControllerLayoutGuide type="bottom" id="ZiN-ZJ-IPm"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="djg-Db-EXb">
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="LinkedInSignInImage" translatesAutoresizingMaskIntoConstraints="NO" id="gOO-hq-sCH">
+                                <rect key="frame" x="0.0" y="64" width="1024" height="706"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="828-9t-eUs"/>
+                    <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="WQf-cY-aR7" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1280" y="-1091"/>
+        </scene>
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="LIAViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="LIAViewController" id="BYZ-38-t0r" customClass="LIAViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="v9b-Nd-1K1"/>
                         <viewControllerLayoutGuide type="bottom" id="zVw-10-nIz"/>
@@ -186,7 +213,7 @@
                                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Interested in the New Zealand Defence Force? " lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="361" translatesAutoresizingMaskIntoConstraints="NO" id="D4W-Lo-KUa">
                                                         <rect key="frame" x="13" y="108" width="361" height="42"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                        <fontDescription key="fontDescription" type="italicSystem" pointSize="16"/>
+                                                        <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="16"/>
                                                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
@@ -323,7 +350,11 @@
                     </view>
                     <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
                     <navigationItem key="navigationItem" id="X5I-jK-xU3">
-                        <barButtonItem key="rightBarButtonItem" image="PersonIcon" id="Y1F-aP-HQN"/>
+                        <barButtonItem key="rightBarButtonItem" image="PersonIcon" id="Y1F-aP-HQN">
+                            <connections>
+                                <action selector="userProfileTapped:" destination="BYZ-38-t0r" id="af1-PO-1VZ"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
@@ -350,7 +381,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="1244" y="-91"/>
+            <point key="canvasLocation" x="2424" y="-91"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="JIj-5a-yd3">
@@ -364,7 +395,7 @@
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="zsh-Ei-qNL"/>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="99z-WR-blg"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QLo-5P-Ifs" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -445,13 +476,14 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nKw-rh-IQS" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1244" y="845"/>
+            <point key="canvasLocation" x="2424" y="829"/>
         </scene>
     </scenes>
     <resources>
         <image name="ArrowIconBackUnselected" width="26" height="20"/>
         <image name="HomeIconUnselected" width="27" height="26"/>
         <image name="IconRightArrow" width="15" height="15"/>
+        <image name="LinkedInSignInImage" width="224" height="149"/>
         <image name="PersonIcon" width="25" height="25"/>
         <image name="PersonImage" width="256" height="256"/>
         <image name="WhiteGradient" width="1" height="1"/>
