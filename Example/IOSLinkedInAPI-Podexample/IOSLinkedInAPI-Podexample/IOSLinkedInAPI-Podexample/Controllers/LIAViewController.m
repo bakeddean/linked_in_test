@@ -13,6 +13,7 @@
 #import "LIALinkedInApplication.h"
 #import "LIATableViewCell.h"
 #import "LIACompany.h"
+#import "NZDFLinkedInViewController.h"
 
 #define LINKEDIN_TOKEN_KEY @"linkedin_token"    // Move this from httpclient.m to .h
 #define COLOR_RGBA(RED,GREEN,BLUE,ALPHA) [UIColor colorWithRed:RED/255.0f green:GREEN/255.0f blue:BLUE/255.0f alpha:ALPHA/1.0f]
@@ -217,6 +218,10 @@
         else if(indexPath.row == 1){
             cell.rightLabel.text = self.company.websiteUrl;
             cell.rightLabel.textColor = [UIColor blueColor];
+            UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(openLink)];
+            tap.numberOfTapsRequired = 1;
+            cell.rightLabel.userInteractionEnabled = YES;
+            [cell.rightLabel addGestureRecognizer:tap];
         }
     }
     
@@ -231,6 +236,12 @@
             cell.rightLabel.text = self.company.employeeCountRange;
     }
     return cell;
+}
+
+- (void)openLink {
+    NSLog(@"Open link");
+    NZDFLinkedInViewController *bob = [self.storyboard instantiateViewControllerWithIdentifier:@"LinkedInViewController"];
+    [self.navigationController pushViewController:bob animated:YES];
 }
 
 #pragma mark - UIViewController orientation event

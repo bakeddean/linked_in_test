@@ -7,9 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		058C69A5197387D5004ECB02 /* LIATableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 058C69A3197387D5004ECB02 /* LIATableViewCell.m */; };
-		058C69A6197387D5004ECB02 /* LIATableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 058C69A4197387D5004ECB02 /* LIATableViewCell.xib */; };
 		058C69AA19739490004ECB02 /* LIACompany.m in Sources */ = {isa = PBXBuildFile; fileRef = 058C69A919739490004ECB02 /* LIACompany.m */; };
+		058C69AE1974AB54004ECB02 /* LIATableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 058C69AD1974AB54004ECB02 /* LIATableViewCell.m */; };
+		058C69B01974AB5B004ECB02 /* LIATableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 058C69AF1974AB5A004ECB02 /* LIATableViewCell.xib */; };
+		058C69B41974AB93004ECB02 /* LIAViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 058C69B31974AB93004ECB02 /* LIAViewController.m */; };
+		058C69B71974AC46004ECB02 /* NZDFLinkedInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 058C69B61974AC46004ECB02 /* NZDFLinkedInViewController.m */; };
 		16AD612F556B4B92ADB38EEF /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 35282DA869D54E88A071E44A /* libPods.a */; };
 		33AE657C185FA2E400981915 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 33AE657B185FA2E400981915 /* Foundation.framework */; };
 		33AE657E185FA2E400981915 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 33AE657D185FA2E400981915 /* CoreGraphics.framework */; };
@@ -19,7 +21,6 @@
 		33AE658C185FA2E400981915 /* LIAAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 33AE658B185FA2E400981915 /* LIAAppDelegate.m */; };
 		33AE658F185FA2E400981915 /* Main_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 33AE658D185FA2E400981915 /* Main_iPhone.storyboard */; };
 		33AE6592185FA2E400981915 /* Main_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 33AE6590185FA2E400981915 /* Main_iPad.storyboard */; };
-		33AE6595185FA2E400981915 /* LIAViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 33AE6594185FA2E400981915 /* LIAViewController.m */; };
 		33AE6597185FA2E400981915 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 33AE6596185FA2E400981915 /* Images.xcassets */; };
 		33AE659E185FA2E500981915 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 33AE659D185FA2E400981915 /* XCTest.framework */; };
 		33AE659F185FA2E500981915 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 33AE657B185FA2E400981915 /* Foundation.framework */; };
@@ -40,11 +41,15 @@
 
 /* Begin PBXFileReference section */
 		058C699E196CD67B004ECB02 /* LIALinkedInClientExampleCredentials.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LIALinkedInClientExampleCredentials.h; sourceTree = "<group>"; };
-		058C69A2197387D5004ECB02 /* LIATableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LIATableViewCell.h; sourceTree = "<group>"; };
-		058C69A3197387D5004ECB02 /* LIATableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LIATableViewCell.m; sourceTree = "<group>"; };
-		058C69A4197387D5004ECB02 /* LIATableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LIATableViewCell.xib; sourceTree = "<group>"; };
 		058C69A819739490004ECB02 /* LIACompany.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LIACompany.h; sourceTree = "<group>"; };
 		058C69A919739490004ECB02 /* LIACompany.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LIACompany.m; sourceTree = "<group>"; };
+		058C69AC1974AB48004ECB02 /* LIATableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LIATableViewCell.h; sourceTree = "<group>"; };
+		058C69AD1974AB54004ECB02 /* LIATableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LIATableViewCell.m; sourceTree = "<group>"; };
+		058C69AF1974AB5A004ECB02 /* LIATableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LIATableViewCell.xib; sourceTree = "<group>"; };
+		058C69B21974AB93004ECB02 /* LIAViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LIAViewController.h; sourceTree = "<group>"; };
+		058C69B31974AB93004ECB02 /* LIAViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LIAViewController.m; sourceTree = "<group>"; };
+		058C69B51974AC3F004ECB02 /* NZDFLinkedInViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NZDFLinkedInViewController.h; sourceTree = "<group>"; };
+		058C69B61974AC46004ECB02 /* NZDFLinkedInViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NZDFLinkedInViewController.m; sourceTree = "<group>"; };
 		33AE6578185FA2E400981915 /* IOSLinkedInAPI-Podexample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "IOSLinkedInAPI-Podexample.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		33AE657B185FA2E400981915 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		33AE657D185FA2E400981915 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -57,8 +62,6 @@
 		33AE658B185FA2E400981915 /* LIAAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LIAAppDelegate.m; sourceTree = "<group>"; };
 		33AE658E185FA2E400981915 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPhone.storyboard; sourceTree = "<group>"; };
 		33AE6591185FA2E400981915 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPad.storyboard; sourceTree = "<group>"; };
-		33AE6593185FA2E400981915 /* LIAViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LIAViewController.h; sourceTree = "<group>"; };
-		33AE6594185FA2E400981915 /* LIAViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LIAViewController.m; sourceTree = "<group>"; };
 		33AE6596185FA2E400981915 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		33AE659C185FA2E400981915 /* IOSLinkedInAPI-PodexampleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "IOSLinkedInAPI-PodexampleTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		33AE659D185FA2E400981915 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
@@ -104,6 +107,27 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
+		058C69AB1974AAEE004ECB02 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				058C69AC1974AB48004ECB02 /* LIATableViewCell.h */,
+				058C69AD1974AB54004ECB02 /* LIATableViewCell.m */,
+				058C69AF1974AB5A004ECB02 /* LIATableViewCell.xib */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		058C69B11974AB93004ECB02 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				058C69B61974AC46004ECB02 /* NZDFLinkedInViewController.m */,
+				058C69B51974AC3F004ECB02 /* NZDFLinkedInViewController.h */,
+				058C69B21974AB93004ECB02 /* LIAViewController.h */,
+				058C69B31974AB93004ECB02 /* LIAViewController.m */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
 		33AE656F185FA2E400981915 = {
 			isa = PBXGroup;
 			children = (
@@ -140,19 +164,16 @@
 		33AE6581185FA2E400981915 /* IOSLinkedInAPI-Podexample */ = {
 			isa = PBXGroup;
 			children = (
+				058C69B11974AB93004ECB02 /* Controllers */,
+				058C69AB1974AAEE004ECB02 /* Views */,
 				058C69A719739473004ECB02 /* Models */,
 				33AE658A185FA2E400981915 /* LIAAppDelegate.h */,
 				33AE658B185FA2E400981915 /* LIAAppDelegate.m */,
 				33AE658D185FA2E400981915 /* Main_iPhone.storyboard */,
 				33AE6590185FA2E400981915 /* Main_iPad.storyboard */,
-				33AE6593185FA2E400981915 /* LIAViewController.h */,
-				33AE6594185FA2E400981915 /* LIAViewController.m */,
 				33AE6596185FA2E400981915 /* Images.xcassets */,
 				33AE6582185FA2E400981915 /* Supporting Files */,
 				058C699E196CD67B004ECB02 /* LIALinkedInClientExampleCredentials.h */,
-				058C69A2197387D5004ECB02 /* LIATableViewCell.h */,
-				058C69A3197387D5004ECB02 /* LIATableViewCell.m */,
-				058C69A4197387D5004ECB02 /* LIATableViewCell.xib */,
 			);
 			path = "IOSLinkedInAPI-Podexample";
 			sourceTree = "<group>";
@@ -268,7 +289,7 @@
 				33AE6592185FA2E400981915 /* Main_iPad.storyboard in Resources */,
 				33AE6597185FA2E400981915 /* Images.xcassets in Resources */,
 				33AE658F185FA2E400981915 /* Main_iPhone.storyboard in Resources */,
-				058C69A6197387D5004ECB02 /* LIATableViewCell.xib in Resources */,
+				058C69B01974AB5B004ECB02 /* LIATableViewCell.xib in Resources */,
 				33AE6586185FA2E400981915 /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -322,10 +343,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				33AE6588185FA2E400981915 /* main.m in Sources */,
+				058C69AE1974AB54004ECB02 /* LIATableViewCell.m in Sources */,
+				058C69B71974AC46004ECB02 /* NZDFLinkedInViewController.m in Sources */,
 				058C69AA19739490004ECB02 /* LIACompany.m in Sources */,
 				33AE658C185FA2E400981915 /* LIAAppDelegate.m in Sources */,
-				058C69A5197387D5004ECB02 /* LIATableViewCell.m in Sources */,
-				33AE6595185FA2E400981915 /* LIAViewController.m in Sources */,
+				058C69B41974AB93004ECB02 /* LIAViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
