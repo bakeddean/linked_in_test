@@ -7,7 +7,6 @@
 //
 
 #import "NZDFLinkedInViewController.h"
-#define HOME @"http://www.nzdf.mil.nz"
 
 @interface NZDFLinkedInViewController () <UIWebViewDelegate>
 
@@ -33,9 +32,10 @@
 {
     [super viewDidLoad];
     self.webView.delegate = self;
-    
-    // Load NZDF linkedin page
-    NSURL *url = [[NSURL alloc]initWithString:HOME];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    NSURL *url = [[NSURL alloc]initWithString:self.url];
     NSURLRequest *request = [[NSURLRequest alloc]initWithURL:url];
     [self.webView loadRequest:request];
 }
@@ -56,10 +56,12 @@
 }
 
 - (IBAction)homeTapped:(UIBarButtonItem *)sender {
-    NSURL *url = [[NSURL alloc]initWithString:HOME];
+    NSURL *url = [[NSURL alloc]initWithString:self.url];
     NSURLRequest *request = [[NSURLRequest alloc]initWithURL:url];
     [self.webView loadRequest:request];
 }
+
+#pragma mark - UIWebViewDelegate
 
 - (void)webViewDidStartLoad:(UIWebView *)webView {
     [self.activityIndicator startAnimating];
@@ -69,10 +71,10 @@
     [self.activityIndicator stopAnimating];
     self.backButton.enabled = self.webView.canGoBack;
     
-    // Check if we are on the NZDF linkedin home page
+    // Check if we are on the self.url page
     NSString *url = [self.webView.request.URL  absoluteString];
     url = [[url componentsSeparatedByString:@"?"]firstObject];
-    self.homeButton.enabled = ![url isEqualToString:HOME];
+    self.homeButton.enabled = ![url isEqualToString:self.url];
 }
 
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {

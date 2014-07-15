@@ -45,6 +45,7 @@
 
 // Careers properties
 @property (weak, nonatomic) IBOutlet UIImageView *squareLogoImageView;
+@property (weak, nonatomic) IBOutlet UIButton *learnMoreButton;
 
 @end
 
@@ -60,6 +61,8 @@
   _client = [self client];
   
   self.followButton.layer.cornerRadius = 3.0f;
+  self.learnMoreButton.layer.cornerRadius = 3.0f;
+  
   self.textView.textContainerInset = UIEdgeInsetsMake(10, 10, 20, 10);
   
   self.leftTableView.dataSource = self;
@@ -88,7 +91,7 @@
     [self.rightTableView reloadData];
 }
 
-#pragma mark - Button actions
+#pragma mark - User actions
 
 // Sign in to LinkedIn
 - (IBAction)didTapConnectWithLinkedIn:(id)sender {
@@ -104,6 +107,20 @@
     } failure:^(NSError *error) {
         NSLog(@"Authorization failed %@", error);
     }];
+}
+
+// User tapped link in company details table.
+- (void)openLink {
+    NZDFLinkedInViewController *linkedInViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"LinkedInViewController"];
+    linkedInViewController.url = @"http://www.nzdf.mil.nz/";
+    [self.navigationController pushViewController:linkedInViewController animated:YES];
+}
+
+// User tapped careers learn more button.
+- (IBAction)learnMoreTapped:(UIButton *)sender {
+    NZDFLinkedInViewController *linkedInViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"LinkedInViewController"];
+    linkedInViewController.url = @"http://www.defencecareers.mil.nz/";
+    [self.navigationController pushViewController:linkedInViewController animated:YES];
 }
 
 // Get job postings
@@ -236,12 +253,6 @@
             cell.rightLabel.text = self.company.employeeCountRange;
     }
     return cell;
-}
-
-- (void)openLink {
-    NSLog(@"Open link");
-    NZDFLinkedInViewController *bob = [self.storyboard instantiateViewControllerWithIdentifier:@"LinkedInViewController"];
-    [self.navigationController pushViewController:bob animated:YES];
 }
 
 #pragma mark - UIViewController orientation event

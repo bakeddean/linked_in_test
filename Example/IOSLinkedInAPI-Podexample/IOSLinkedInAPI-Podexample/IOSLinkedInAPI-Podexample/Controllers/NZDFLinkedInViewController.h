@@ -10,4 +10,6 @@
 
 @interface NZDFLinkedInViewController : UIViewController
 
+@property (nonatomic,strong) NSString *url;
+
 @end

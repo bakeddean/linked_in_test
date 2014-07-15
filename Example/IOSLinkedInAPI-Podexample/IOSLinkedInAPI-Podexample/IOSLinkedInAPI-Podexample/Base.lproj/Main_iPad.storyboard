@@ -183,34 +183,25 @@
                                                             <constraint firstAttribute="height" constant="40" id="PVb-3N-pUF"/>
                                                         </constraints>
                                                     </view>
-                                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kAx-1G-MFL">
-                                                        <rect key="frame" x="212" y="102" width="69" height="30"/>
-                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                        <color key="backgroundColor" red="0.96470588239999999" green="0.89019607840000003" blue="0.070588235289999995" alpha="1" colorSpace="calibratedRGB"/>
-                                                        <state key="normal" title="Careers">
-                                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                                        </state>
-                                                        <connections>
-                                                            <action selector="jobsTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="MW8-dc-7r5"/>
-                                                        </connections>
-                                                    </button>
-                                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Wb0-HW-riM">
-                                                        <rect key="frame" x="395" y="102" width="47" height="30"/>
-                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                        <state key="normal" title="Sign in">
-                                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                                        </state>
-                                                        <connections>
-                                                            <action selector="didTapConnectWithLinkedIn:" destination="BYZ-38-t0r" eventType="touchUpInside" id="iSO-RN-P7x"/>
-                                                        </connections>
-                                                    </button>
                                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Interested in the New Zealand Defence Force? " lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="361" translatesAutoresizingMaskIntoConstraints="NO" id="D4W-Lo-KUa">
-                                                        <rect key="frame" x="9" y="39" width="361" height="42"/>
+                                                        <rect key="frame" x="13" y="108" width="361" height="42"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                         <fontDescription key="fontDescription" type="italicSystem" pointSize="16"/>
                                                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
+                                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pkJ-Ur-3fo">
+                                                        <rect key="frame" x="371" y="114" width="102" height="30"/>
+                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                        <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <state key="normal" title="Learn more">
+                                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                        </state>
+                                                        <connections>
+                                                            <action selector="learnMoreTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="rAq-LV-PGs"/>
+                                                        </connections>
+                                                    </button>
                                                 </subviews>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                                 <constraints>
@@ -343,6 +334,7 @@
                         <outlet property="descriptionFadeImageView" destination="PDK-B9-LQi" id="zPw-u6-QeX"/>
                         <outlet property="descriptionTextViewHeightConstraint" destination="6wX-WJ-a0n" id="1r7-v6-onB"/>
                         <outlet property="followButton" destination="fut-rL-cVE" id="YGl-h3-tOC"/>
+                        <outlet property="learnMoreButton" destination="pkJ-Ur-3fo" id="Fbb-kU-hVw"/>
                         <outlet property="leftTableView" destination="Lqj-IH-Z1Q" id="0zB-vo-WH0"/>
                         <outlet property="numFollowersLabel" destination="XKi-b0-bgq" id="3zu-a9-4Xs"/>
                         <outlet property="rightTableView" destination="6F5-tZ-ZPk" id="iQZ-09-gXe"/>
@@ -404,7 +396,7 @@
                                 </constraints>
                                 <items>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="CjF-6k-rWx"/>
-                                    <barButtonItem title="Back" id="h0B-Fe-Nsp">
+                                    <barButtonItem image="ArrowIconBackUnselected" id="h0B-Fe-Nsp">
                                         <connections>
                                             <action selector="backTapped:" destination="HaI-gY-Vho" id="7Sb-Qw-N5P"/>
                                         </connections>
@@ -416,7 +408,7 @@
                                         </connections>
                                     </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="XuK-4d-mPY"/>
-                                    <barButtonItem title="Home" id="VeN-wD-7O6">
+                                    <barButtonItem image="HomeIconUnselected" id="VeN-wD-7O6">
                                         <connections>
                                             <action selector="homeTapped:" destination="HaI-gY-Vho" id="RBa-gO-3HA"/>
                                         </connections>
@@ -457,6 +449,8 @@
         </scene>
     </scenes>
     <resources>
+        <image name="ArrowIconBackUnselected" width="26" height="20"/>
+        <image name="HomeIconUnselected" width="27" height="26"/>
         <image name="IconRightArrow" width="15" height="15"/>
         <image name="PersonIcon" width="25" height="25"/>
         <image name="PersonImage" width="256" height="256"/>
